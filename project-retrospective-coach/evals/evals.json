@@ -91,6 +91,22 @@
         "personal_growth_and_abilities": 5,
         "improvement_quality": 5
       }
+    },
+    {
+      "id": 6,
+      "name": "ask-before-html-presentation-and-before-deploy",
+      "prompt": "这篇复盘文档已经生成到飞书了，接下来怎么处理？",
+      "expected_output": "应先询问用户是否需要把复盘文档转换成 HTML presentation。不能默认生成 HTML，不能默认调用 frontend-slides，不能默认部署 URL。如果用户选择需要，才使用 frontend-slides 生成本地单文件 HTML；本地 HTML 生成后，还要再次询问是否需要部署成可分享 URL。",
+      "assertions": [
+        "复盘文档完成后先询问用户是否需要 HTML presentation",
+        "用户未确认前不调用 frontend-slides",
+        "用户未确认前不生成 HTML",
+        "如果用户不需要，应终止于当前飞书文档或复盘文档",
+        "如果用户需要，应使用 frontend-slides 生成本地单文件 HTML",
+        "默认不部署 URL",
+        "本地 HTML 生成后，部署成可分享 URL 前必须二次询问用户"
+      ],
+      "files": []
     }
   ]
 }

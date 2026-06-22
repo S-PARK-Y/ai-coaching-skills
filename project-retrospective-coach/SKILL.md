@@ -394,3 +394,57 @@ US 酒旅会员权益：把“会员”从功能模块拆成交易钩子
 - 改进清单。
 
 只有当用户明确要求创建飞书文档、白板或图表时，才调用 `lark-doc` / `lark-whiteboard`。如果只是复盘聊天或写草稿，先在对话中完成。
+
+## HTML Presentation 可选分支
+
+当完整复盘文档已经输出，尤其是已经生成飞书文档后，不要默认继续生成 HTML presentation。先询问用户是否需要。
+
+询问模板：
+
+```text
+复盘文档已经完成。你还需要我把它转换成适合分享/汇报的 HTML presentation 吗？
+
+1. 需要：我会使用 frontend-slides，把这份复盘转成单文件 HTML 幻灯片
+2. 不需要：流程结束，保留当前飞书文档版本
+```
+
+如果用户不需要：
+- 停止流程；
+- 不生成 HTML；
+- 不调用 frontend-slides；
+- 终止于当前飞书文档或当前复盘文档。
+
+如果用户需要：
+- 直接使用 https://github.com/zarazhangrui/frontend-slides；
+- 读取 `frontend-slides` 的 `SKILL.md` 和必要支持文件；
+- 将 9 标题复盘文档压缩成 6-10 页 HTML slides；
+- 默认生成本地单文件 HTML presentation；
+- 不默认部署成在线 URL；
+- 生成本地 HTML 后，再二次询问用户是否需要部署成可分享 URL。
+
+部署二次询问模板：
+
+```text
+HTML presentation 已生成。你需要我继续部署成可分享 URL 吗？
+
+1. 需要：我会按 frontend-slides 的部署流程继续处理
+2. 不需要：流程结束，保留本地 HTML 文件
+```
+
+9 标题复盘文档到 slides 的默认映射：
+
+| 复盘文档 | HTML presentation |
+|-|-|
+| 【案例标题】 | 封面：一句话判断 |
+| 【背景】 | Slide 1：业务矛盾/问题意识 |
+| 【内容】 | Slide 2：方案拆解 |
+| 【目标】 | Slide 3：目标与验证口径 |
+| 【过程】 | Slide 4：关键动作时间线 |
+| 【结果】 | Slide 5：交付物和业务价值 |
+| 【能力】 | Slide 6：能力映射 |
+| 【做得好的】 | Slide 7：可复用方法 |
+| 【待改进的】 | Slide 8：风险、改进和下一次行动 |
+
+frontend-slides 只负责 presentation 呈现，不反向改写复盘结论。除非用户要求重写内容，否则不要为了做 slides 改变核心判断。
+
+生成 slides 时保留复盘文档的问题意识、关键数据、图表、能力映射和待改进动作。优先使用图表、对比、流程、时间线、能力映射，而不是大段文字，让 slides 适合内部分享、组会、述职或 showcase。
